@@ -71,7 +71,7 @@ async function run() {
        app.post('/instructor', async (req, res) => {
         const form = req.body
         console.log(form)
-        const result = await instructorsCollection.insertOne(form)
+        const result = await usersCollection.insertOne(form)
         res.send(result)
       })
 
@@ -102,6 +102,19 @@ async function run() {
         const result = await usersCollection.updateOne(filter, updateDoc);
         res.send(result);
       })
+
+      app.patch('/users/instructor/:id', async (req, res) => {
+        const id= req.params.id
+        const filter = {_id: new ObjectId(id)}
+        const updateDoc = {
+          $set: {
+            role: "instructor"
+        },
+      };
+        const result = await usersCollection.updateOne(filter, updateDoc);
+        res.send(result);
+      })
+
 
     app.post ('/selectedClasses', async (req, res) => {
         const item = req.body;
